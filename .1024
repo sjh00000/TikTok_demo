@@ -1,0 +1,10 @@
+run_command: ./simple-demo
+debug:
+  support: true
+  launch:
+    request: launch
+    mode: debug
+    program: .
+    console: integratedTerminal
+    cwd: .
+compile_command: go build
