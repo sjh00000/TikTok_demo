@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/RaymondCode/simple-demo/controller"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"tiktok/controller"
 )
 
 func initRouter(r *gin.Engine) {
