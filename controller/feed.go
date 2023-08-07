@@ -7,6 +7,7 @@ import (
 )
 
 type FeedResponse struct {
+	//嵌入字段
 	Response
 	VideoList []Video `json:"video_list,omitempty"`
 	NextTime  int64   `json:"next_time,omitempty"`

@@ -6,8 +6,11 @@ import (
 )
 
 func main() {
+
+	//消息服务器
 	go service.RunMessageServer()
 
+	//创建一个默认的 Gin 引擎实例
 	r := gin.Default()
 
 	initRouter(r)
