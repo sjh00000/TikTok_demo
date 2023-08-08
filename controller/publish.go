@@ -16,12 +16,16 @@ type VideoListResponse struct {
 func Publish(c *gin.Context) {
 	token := c.PostForm("token")
 
+	//查询当前用户是否存在
 	if _, exist := usersLoginInfo[token]; !exist {
 		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
 		return
 	}
 
+	//获取视频数据
 	data, err := c.FormFile("data")
+
+	//上传出错，返回
 	if err != nil {
 		c.JSON(http.StatusOK, Response{
 			StatusCode: 1,
@@ -30,6 +34,7 @@ func Publish(c *gin.Context) {
 		return
 	}
 
+	//获取文件的名字以及userID来创建视频文件在public文件夹下
 	filename := filepath.Base(data.Filename)
 	user := usersLoginInfo[token]
 	finalName := fmt.Sprintf("%d_%s", user.Id, filename)
