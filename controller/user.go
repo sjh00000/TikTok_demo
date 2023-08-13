@@ -6,22 +6,20 @@ import (
 	"sync/atomic"
 )
 
-// usersLoginInfo use map to store user info, and key is username+password for demo
-// user data will be cleared every time the server starts
-// test data: username=zhanglei, password=douyin
 // 此map用于查找用户是否存在
 var usersLoginInfo = map[string]User{
-	"zhangleidouyin": {
+	"孙佳豪123456": {
 		Id:            1,
-		Name:          "zhanglei",
-		FollowCount:   10,
-		FollowerCount: 5,
+		Name:          "孙佳豪",
+		FollowCount:   0,
+		FollowerCount: 99999999,
 		IsFollow:      true,
+		TotalFavorite: 99999999,
 	},
 }
 
 // id生成器
-var userIdSequence = int64(1)
+var userIdSequence int64 = 1
 
 // UserLoginResponse 返回登录，注册信息
 type UserLoginResponse struct {
