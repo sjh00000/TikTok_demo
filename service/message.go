@@ -55,7 +55,7 @@ func process(conn net.Conn) {
 		}
 
 		//将接收到的json数据转换为结构体MessageSendEvent
-		var event = controller.MessageSendEvent{}
+		event := controller.MessageSendEvent{}
 		_ = json.Unmarshal(buf[:n], &event)
 		fmt.Printf("Receive Message：%+v\n", event)
 
