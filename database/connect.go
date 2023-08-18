@@ -7,9 +7,12 @@ import (
 	"time"
 )
 
+var db *gorm.DB
+
 func InitDatabase() {
-	db, err := gorm.Open(mysql.New(mysql.Config{
-		DSN:                       "root:123456@tcp(127.0.0.1:3306)/tiktok?charset=utf8&parseTime=True&loc=Local",
+	var err error
+	db, err = gorm.Open(mysql.New(mysql.Config{
+		DSN:                       "tiktok:123456@tcp(47.109.78.46:3306)/tiktok?charset=utf8&parseTime=True&loc=Local",
 		DefaultStringSize:         256,
 		DisableDatetimePrecision:  true,
 		DontSupportRenameIndex:    true,
@@ -32,5 +35,5 @@ func InitDatabase() {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	fmt.Println("success to link mysql")
-	select {}
+
 }

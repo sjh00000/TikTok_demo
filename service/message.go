@@ -6,7 +6,7 @@ import (
 	"io"
 	"net"
 	"sync"
-	"tiktok/controller"
+	"tiktok/pjdata"
 )
 
 // 线程安全映射类型，可以保证修改map时的并发安全
@@ -55,7 +55,7 @@ func process(conn net.Conn) {
 		}
 
 		//将接收到的json数据转换为结构体MessageSendEvent
-		event := controller.MessageSendEvent{}
+		event := pjdata.MessageSendEvent{}
 		_ = json.Unmarshal(buf[:n], &event)
 		fmt.Printf("Receive Message：%+v\n", event)
 
@@ -79,7 +79,7 @@ func process(conn net.Conn) {
 		}
 
 		//发送消息
-		pushEvent := controller.MessagePushEvent{
+		pushEvent := pjdata.MessagePushEvent{
 			FromUserId: event.UserId,
 			MsgContent: event.MsgContent,
 		}

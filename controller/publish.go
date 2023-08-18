@@ -5,11 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
+	"tiktok/pjdata"
 )
 
 type VideoListResponse struct {
-	Response
-	VideoList []Video `json:"video_list"`
+	pjdata.Response
+	VideoList []pjdata.Video `json:"video_list"`
 }
 
 // Publish check token then save upload file to public directory
@@ -18,7 +19,7 @@ func Publish(c *gin.Context) {
 
 	//查询当前用户是否存在
 	if _, exist := usersLoginInfo[token]; !exist {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
+		c.JSON(http.StatusOK, pjdata.Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
 		return
 	}
 
@@ -27,7 +28,7 @@ func Publish(c *gin.Context) {
 
 	//上传出错，返回
 	if err != nil {
-		c.JSON(http.StatusOK, Response{
+		c.JSON(http.StatusOK, pjdata.Response{
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
 		})
@@ -40,14 +41,14 @@ func Publish(c *gin.Context) {
 	finalName := fmt.Sprintf("%d_%s", user.Id, filename)
 	saveFile := filepath.Join("./public/", finalName)
 	if err := c.SaveUploadedFile(data, saveFile); err != nil {
-		c.JSON(http.StatusOK, Response{
+		c.JSON(http.StatusOK, pjdata.Response{
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, Response{
+	c.JSON(http.StatusOK, pjdata.Response{
 		StatusCode: 0,
 		StatusMsg:  finalName + " uploaded successfully",
 	})
@@ -56,7 +57,7 @@ func Publish(c *gin.Context) {
 // PublishList all users have same publish video list
 func PublishList(c *gin.Context) {
 	c.JSON(http.StatusOK, VideoListResponse{
-		Response: Response{
+		Response: pjdata.Response{
 			StatusCode: 0,
 		},
 		VideoList: DemoVideos,
