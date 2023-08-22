@@ -21,7 +21,7 @@ func Feed(c *gin.Context) {
 	VideoListData := database.SearchVideo()
 	c.JSON(http.StatusOK, FeedResponse{
 		Response:  pjdata.Response{StatusCode: 0},
-		VideoList: VideoListData,
 		NextTime:  time.Now().Unix(),
+		VideoList: VideoListData,
 	})
 }
