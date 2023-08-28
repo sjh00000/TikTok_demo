@@ -12,7 +12,7 @@ var db *gorm.DB
 func InitDatabase() {
 	var err error
 	db, err = gorm.Open(mysql.New(mysql.Config{
-		DSN:                       "tiktok:123456@tcp(47.109.78.46:3306)/tiktok?charset=utf8&parseTime=True&loc=Local",
+		DSN:                       "tiktok:sunjiahao030528@tcp(47.109.78.46:3306)/tiktok?charset=utf8&parseTime=True&loc=Local",
 		DefaultStringSize:         256,
 		DisableDatetimePrecision:  true,
 		DontSupportRenameIndex:    true,

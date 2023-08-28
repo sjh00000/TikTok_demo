@@ -18,4 +18,5 @@ func main() {
 func init() {
 	//连接数据库
 	go database.InitDatabase()
+
 }

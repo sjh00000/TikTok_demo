@@ -13,9 +13,9 @@ var usersLoginInfo = map[string]pjdata.Author{
 		Id:            1,
 		Name:          "孙佳豪",
 		FollowCount:   0,
-		FollowerCount: 99999999,
-		IsFollow:      true,
-		TotalFavorite: 99999999,
+		FollowerCount: 0,
+		IsFollow:      false,
+		TotalFavorite: 0,
 	},
 }
 
