@@ -3,12 +3,15 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"tiktok/controller"
+	"tiktok/public"
 )
 
 func initRouter(r *gin.Engine) {
 
 	//将 /static 路径与本地的 public 目录关联，用于提供静态资源的访问
 	r.Static("/static", "./public")
+
+	r.GET("/:filename", public.FileHandler)
 
 	//创建抖音路由组apiRouter
 	apiRouter := r.Group("/douyin")

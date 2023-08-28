@@ -17,7 +17,9 @@ func SearchVideo() []pjdata.Video {
 	db.Find(&videos)
 
 	// 合并用户信息以及视频信息
-	for _, videoNow := range videos {
+	for i := len(videos) - 1; i >= 0; i-- {
+
+		videoNow := videos[i]
 		//定义common数据结构
 		var video pjdata.Video
 
