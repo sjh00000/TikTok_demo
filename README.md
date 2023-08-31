@@ -1,18 +1,10 @@
 
 # TikTok_demo
-Config files for my GitHub profile.
-=======
-# simple-demo
+
 
 ## 抖音项目服务端简单示例
 
 具体功能内容参考飞书说明文档
-
-工程无其他依赖，直接编译运行即可
-
-```shell
-go build && ./simple-demo
-```
 
 ### 功能说明
 接口功能不完善，仅作为示例
@@ -26,7 +18,6 @@ test 目录下为不同场景的功能测试case，可用于验证功能实现�
 
 其中 common.go 中的 _serverAddr_ 为服务部署的地址，默认为本机地址，可以根据实际情况修改
 
-
-测试数据写在 demo_data.go 中，用于列表接口的 mock 测试123456
+123123
 
 

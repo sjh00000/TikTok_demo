@@ -5,20 +5,23 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
+	"tiktok/database"
+	"tiktok/pjdata"
 )
 
 type VideoListResponse struct {
-	Response
-	VideoList []Video `json:"video_list"`
+	pjdata.Response
+	VideoList []pjdata.Video `json:"video_list"`
 }
 
 // Publish check token then save upload file to public directory
 func Publish(c *gin.Context) {
 	token := c.PostForm("token")
+	title := c.PostForm("title")
 
 	//查询当前用户是否存在
 	if _, exist := usersLoginInfo[token]; !exist {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
+		c.JSON(http.StatusOK, pjdata.Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
 		return
 	}
 
@@ -27,7 +30,7 @@ func Publish(c *gin.Context) {
 
 	//上传出错，返回
 	if err != nil {
-		c.JSON(http.StatusOK, Response{
+		c.JSON(http.StatusOK, pjdata.Response{
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
 		})
@@ -40,14 +43,26 @@ func Publish(c *gin.Context) {
 	finalName := fmt.Sprintf("%d_%s", user.Id, filename)
 	saveFile := filepath.Join("./public/", finalName)
 	if err := c.SaveUploadedFile(data, saveFile); err != nil {
-		c.JSON(http.StatusOK, Response{
+		c.JSON(http.StatusOK, pjdata.Response{
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, Response{
+	//合成common数据结构,将video传到数据库中
+	var video = pjdata.Video{
+		Id:            database.AddVideoNum(),
+		Author:        user,
+		PlayUrl:       "http://192.168.115.91:8080/" + finalName,
+		FavoriteCount: 0,
+		CommentCount:  0,
+		IsFavorite:    false,
+		Title:         title,
+	}
+	database.AddVideo(video)
+
+	c.JSON(http.StatusOK, pjdata.Response{
 		StatusCode: 0,
 		StatusMsg:  finalName + " uploaded successfully",
 	})
@@ -56,7 +71,7 @@ func Publish(c *gin.Context) {
 // PublishList all users have same publish video list
 func PublishList(c *gin.Context) {
 	c.JSON(http.StatusOK, VideoListResponse{
-		Response: Response{
+		Response: pjdata.Response{
 			StatusCode: 0,
 		},
 		VideoList: DemoVideos,
