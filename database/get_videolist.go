@@ -40,6 +40,12 @@ func SearchAuthor(authorId int64) Author {
 
 	return author
 }
+func FindVideo(videoId int64) Video {
+	var video Video
+	db.Last(&video, videoId)
+
+	return video
+}
 
 // GetVideo 合并
 func GetVideo(video *pjdata.Video, videoNow Video) {
