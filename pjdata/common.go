@@ -34,7 +34,8 @@ type Author struct {
 	Signature       string `json:"signature,omitempty"`
 	TotalFavorite   int64  `json:"total_favorited,omitempty"`
 	WorkCount       int64  `json:"work_count,omitempty"`
-	FavoriteCount   int64  `json:"column:favorite_count,omitempty"`
+	FavoriteCount   int64  `json:"favorite_count,omitempty"`
+	Token           string `json:"token,omitempty"`
 }
 type Message struct {
 	Id         int64  `json:"id,omitempty"`
