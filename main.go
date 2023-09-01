@@ -7,9 +7,6 @@ import (
 
 func main() {
 
-	//消息服务器
-	//go service.RunMessageServer()
-
 	//创建一个默认的 Gin 实例
 	r := gin.Default()
 
@@ -21,4 +18,5 @@ func main() {
 func init() {
 	//连接数据库
 	go database.InitDatabase()
+
 }

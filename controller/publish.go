@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
+	"tiktok/database"
 	"tiktok/pjdata"
 )
 
@@ -16,6 +17,7 @@ type VideoListResponse struct {
 // Publish check token then save upload file to public directory
 func Publish(c *gin.Context) {
 	token := c.PostForm("token")
+	title := c.PostForm("title")
 
 	//查询当前用户是否存在
 	if _, exist := usersLoginInfo[token]; !exist {
@@ -47,6 +49,18 @@ func Publish(c *gin.Context) {
 		})
 		return
 	}
+
+	//合成common数据结构,将video传到数据库中
+	var video = pjdata.Video{
+		Id:            database.AddVideoNum(),
+		Author:        user,
+		PlayUrl:       "http://192.168.115.91:8080/" + finalName,
+		FavoriteCount: 0,
+		CommentCount:  0,
+		IsFavorite:    false,
+		Title:         title,
+	}
+	database.AddVideo(video)
 
 	c.JSON(http.StatusOK, pjdata.Response{
 		StatusCode: 0,
