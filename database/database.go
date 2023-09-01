@@ -30,6 +30,7 @@ type Author struct {
 	TotalFavorite   int64  `gorm:"column:total_favorited"`
 	WorkCount       int64  `gorm:"column:work_count"`
 	FavoriteCount   int64  `gorm:"column:favorite_count"`
+	Token           string `gorm:"column:token"`
 }
 
 type Message struct {
