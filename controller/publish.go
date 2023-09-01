@@ -54,7 +54,7 @@ func Publish(c *gin.Context) {
 	var video = pjdata.Video{
 		Id:            database.AddVideoNum(),
 		Author:        user,
-		PlayUrl:       "http://192.168.115.91:8080/" + finalName,
+		PlayUrl:       "http://192.168.115.59:8080/" + finalName,
 		FavoriteCount: 0,
 		CommentCount:  0,
 		IsFavorite:    false,
