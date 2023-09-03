@@ -9,7 +9,7 @@ import (
 
 func FileHandler(c *gin.Context) {
 	filename := c.Param("filename")
-	filePath := "D:/software/Git/tiktok/public/" + filename
+	filePath := "./public/" + filename
 
 	fmt.Println(filePath)
 	//打开文件

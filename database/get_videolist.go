@@ -57,3 +57,23 @@ func GetVideo(video *pjdata.Video, videoNow Video) {
 	video.IsFavorite = videoNow.IsFavorite
 	video.Title = videoNow.Title
 }
+
+func SearchAuthorVideo(userId int64, user pjdata.Author) []pjdata.Video {
+	var videos []Video
+
+	var pjVideo []pjdata.Video
+	db.Where("author_id = ?", userId).Find(&videos)
+	for _, video := range videos {
+		pjVideo = append(pjVideo, pjdata.Video{
+			Id:            video.Id,
+			Author:        user,
+			PlayUrl:       video.PlayUrl,
+			CoverUrl:      video.CoverUrl,
+			FavoriteCount: video.FavoriteCount,
+			CommentCount:  video.CommentCount,
+			IsFavorite:    video.IsFavorite,
+			Title:         video.Title,
+		})
+	}
+	return pjVideo
+}
