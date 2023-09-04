@@ -16,7 +16,7 @@ type CommentActionResponse struct {
 	Comment pjdata.Comment `json:"comment,omitempty"`
 }
 
-// CommentAction no practical effect, just check if token is valid
+// CommentAction 评论操作
 func CommentAction(c *gin.Context) {
 	token := c.Query("token")
 	actionType := c.Query("action_type")
@@ -39,10 +39,10 @@ func CommentAction(c *gin.Context) {
 	}
 }
 
-// CommentList all videos have same demo comment list
+// CommentList 评论列表
 func CommentList(c *gin.Context) {
 	c.JSON(http.StatusOK, CommentListResponse{
-		Response:    pjdata.Response{StatusCode: 0},
-		CommentList: DemoComments,
+		Response: pjdata.Response{StatusCode: 0},
+		//CommentList: DemoComments,
 	})
 }

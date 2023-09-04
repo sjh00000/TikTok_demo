@@ -40,17 +40,4 @@ func initRouter(r *gin.Engine) {
 	//评论列表
 	apiRouter.GET("/comment/list/", controller.CommentList)
 
-	/***社交api***/
-	//关注
-	apiRouter.POST("/relation/action/", controller.RelationAction)
-	//关注列表
-	apiRouter.GET("/relation/follow/list/", controller.FollowList)
-	//粉丝列表
-	apiRouter.GET("/relation/follower/list/", controller.FollowerList)
-	//好友列表
-	apiRouter.GET("/relation/friend/list/", controller.FriendList)
-	//聊天记录
-	apiRouter.GET("/message/chat/", controller.MessageChat)
-	//发送信息
-	apiRouter.POST("/message/action/", controller.MessageAction)
 }

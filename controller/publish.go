@@ -5,8 +5,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"tiktok/database"
 	"tiktok/pjdata"
+	"tiktok/public"
 )
 
 type VideoListResponse struct {
@@ -54,7 +56,8 @@ func Publish(c *gin.Context) {
 	var video = pjdata.Video{
 		Id:            database.AddVideoNum(),
 		Author:        user,
-		PlayUrl:       "http://192.168.115.59:8080/" + finalName,
+		PlayUrl:       "http://47.109.78.46:8080/" + finalName,
+		CoverUrl:      public.GetFeedCover(saveFile),
 		FavoriteCount: 0,
 		CommentCount:  0,
 		IsFavorite:    false,
@@ -70,10 +73,21 @@ func Publish(c *gin.Context) {
 
 // PublishList all users have same publish video list
 func PublishList(c *gin.Context) {
+	token := c.Query("token")
+	userId, _ := strconv.Atoi(c.Query("user_id"))
+
+	if _, exist := usersLoginInfo[token]; !exist {
+		c.JSON(http.StatusOK, pjdata.Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
+		return
+	}
+
+	user := usersLoginInfo[token]
+	userVideos := database.SearchAuthorVideo(int64(userId), user)
+
 	c.JSON(http.StatusOK, VideoListResponse{
 		Response: pjdata.Response{
 			StatusCode: 0,
 		},
-		VideoList: DemoVideos,
+		VideoList: userVideos,
 	})
 }
