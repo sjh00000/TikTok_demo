@@ -9,6 +9,7 @@ func AddVideo(video pjdata.Video) {
 		Id:            video.Id,
 		AuthorId:      video.Author.Id,
 		PlayUrl:       video.PlayUrl,
+		CoverUrl:      video.CoverUrl,
 		FavoriteCount: video.FavoriteCount,
 		CommentCount:  video.CommentCount,
 		IsFavorite:    video.IsFavorite,
