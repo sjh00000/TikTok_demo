@@ -52,12 +52,19 @@ func Publish(c *gin.Context) {
 		return
 	}
 
+	c.JSON(http.StatusOK, pjdata.Response{
+		StatusCode: 0,
+		StatusMsg:  finalName + " uploaded successfully",
+	})
+
+	public.CutFeed(finalName)
+
 	//合成common数据结构,将video传到数据库中
 	var video = pjdata.Video{
 		Id:            database.AddVideoNum(),
 		Author:        user,
-		PlayUrl:       "http://47.109.78.46:8080/" + finalName,
-		CoverUrl:      public.GetFeedCover(saveFile),
+		PlayUrl:       "http://47.109.78.46:8080/zip_" + finalName,
+		CoverUrl:      "http://47.109.78.46:8080/" + public.GetFeedCover("zip_"+finalName),
 		FavoriteCount: 0,
 		CommentCount:  0,
 		IsFavorite:    false,
@@ -65,10 +72,6 @@ func Publish(c *gin.Context) {
 	}
 	database.AddVideo(video)
 
-	c.JSON(http.StatusOK, pjdata.Response{
-		StatusCode: 0,
-		StatusMsg:  finalName + " uploaded successfully",
-	})
 }
 
 // PublishList all users have same publish video list
