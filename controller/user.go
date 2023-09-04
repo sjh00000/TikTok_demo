@@ -1,52 +1,21 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 	"sync/atomic"
 	"tiktok/database"
 	"tiktok/pjdata"
 )
 
 // 此map用于查找用户是否存在
-var usersLoginInfo = map[string]pjdata.Author{
-	"孙佳豪_123456": {
-		Id:            1,
-		Name:          "孙佳豪",
-		FollowCount:   0,
-		FollowerCount: 0,
-		IsFollow:      false,
-		TotalFavorite: 0,
-		Token:         "孙佳豪_123456",
-	},
-	"唐梓铭_123456": {
-		Id:            2,
-		Name:          "唐梓铭",
-		FollowCount:   0,
-		FollowerCount: 0,
-		IsFollow:      false,
-		TotalFavorite: 0,
-		Token:         "唐梓铭_123456",
-	},
-	"韩翔宇_123456": {
-		Id:            3,
-		Name:          "韩翔宇",
-		FollowCount:   0,
-		FollowerCount: 0,
-		IsFollow:      false,
-		TotalFavorite: 0,
-		Token:         "韩翔宇_123456",
-	},
-}
-
-var usersRegister = map[string]bool{
-	"孙佳豪": true,
-	"唐梓铭": true,
-	"韩翔宇": true,
-}
+var usersLoginInfo = make(map[string]pjdata.Author)
+var usersRegister = make(map[string]bool)
 
 // id生成器
-var userIdSequence int64 = 3
+var userIdSequence int64 = 0
 
 // UserLoginResponse 返回登录，注册信息
 type UserLoginResponse struct {
@@ -61,15 +30,26 @@ type UserResponse struct {
 	User pjdata.Author `json:"user"`
 }
 
+func Init() {
+	usersRegister, usersLoginInfo = database.MapDefault()
+	userIdSequence = database.AddIdNum()
+}
+
 // Register 注册
 func Register(c *gin.Context) {
 
 	//获取查询参数中名为username的值
 	username := c.Query("username")
 	password := c.Query("password")
-
-	token := username + "_" + password
-
+	var token string
+	if strings.Contains("_", password) {
+		fmt.Println("包含")
+		c.JSON(http.StatusOK, UserLoginResponse{
+			Response: pjdata.Response{StatusCode: 1, StatusMsg: "'_' are banned"},
+		})
+		return
+	}
+	token = username + "_" + password
 	/**
 	检查账号是否已经注册：
 	是：

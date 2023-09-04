@@ -1,6 +1,8 @@
 package database
 
-import "tiktok/pjdata"
+import (
+	"tiktok/pjdata"
+)
 
 func CreateToken(user pjdata.Author) {
 	var dbAuthor = Author{
