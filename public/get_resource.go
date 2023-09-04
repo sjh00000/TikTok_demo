@@ -29,5 +29,6 @@ func FileHandler(c *gin.Context) {
 	}(file)
 
 	//传递文件
+
 	c.File(filePath)
 }
