@@ -30,9 +30,11 @@ type UserResponse struct {
 	User pjdata.Author `json:"user"`
 }
 
-func Init() {
+func MapInit() {
+	fmt.Println("开始了")
 	usersRegister, usersLoginInfo = database.MapDefault()
 	userIdSequence = database.AddIdNum()
+
 }
 
 // Register 注册
@@ -42,7 +44,8 @@ func Register(c *gin.Context) {
 	username := c.Query("username")
 	password := c.Query("password")
 	var token string
-	if strings.Contains("_", password) {
+	fmt.Println(password)
+	if strings.Contains(password, "_") {
 		fmt.Println("包含")
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: pjdata.Response{StatusCode: 1, StatusMsg: "'_' are banned"},
@@ -65,9 +68,10 @@ func Register(c *gin.Context) {
 
 		//创建新的账户，并添加token映射
 		newUser := pjdata.Author{
-			Id:    userIdSequence,
-			Name:  username,
-			Token: token,
+			Id:        userIdSequence,
+			Name:      username,
+			Signature: username,
+			Token:     token,
 		}
 		usersRegister[username] = true
 		database.CreateToken(newUser)
