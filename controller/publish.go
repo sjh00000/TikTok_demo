@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"tiktok/database"
 	"tiktok/pjdata"
+	"tiktok/public"
 )
 
 type VideoListResponse struct {
@@ -56,6 +57,7 @@ func Publish(c *gin.Context) {
 		Id:            database.AddVideoNum(),
 		Author:        user,
 		PlayUrl:       "http://47.109.78.46:8080/" + finalName,
+		CoverUrl:      public.GetFeedCover(saveFile),
 		FavoriteCount: 0,
 		CommentCount:  0,
 		IsFavorite:    false,

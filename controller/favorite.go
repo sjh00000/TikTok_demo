@@ -29,6 +29,6 @@ func FavoriteList(c *gin.Context) {
 		Response: pjdata.Response{
 			StatusCode: 0,
 		},
-		VideoList: DemoVideos,
+		//VideoList: DemoVideos,
 	})
 }

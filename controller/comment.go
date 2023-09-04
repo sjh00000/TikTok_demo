@@ -42,7 +42,7 @@ func CommentAction(c *gin.Context) {
 // CommentList 评论列表
 func CommentList(c *gin.Context) {
 	c.JSON(http.StatusOK, CommentListResponse{
-		Response:    pjdata.Response{StatusCode: 0},
-		CommentList: DemoComments,
+		Response: pjdata.Response{StatusCode: 0},
+		//CommentList: DemoComments,
 	})
 }
