@@ -12,10 +12,11 @@ type Video struct {
 }
 
 type Comment struct {
-	Id         int64  `gorm:"column:"`
-	User       Author `gorm:"column:"`
-	Content    string `gorm:"column:"`
-	CreateDate string `gorm:"column:"`
+	Id         int64  `gorm:"column:id"`
+	VideoId    int64  `gorm:"column:video_id"`
+	UserId     int64  `gorm:"column:user_id"`
+	Content    string `gorm:"column:content"`
+	CreateDate string `gorm:"column:create_date"`
 }
 
 type Author struct {

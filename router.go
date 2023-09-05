@@ -15,7 +15,6 @@ func initRouter(r *gin.Engine) {
 
 	//创建抖音路由组apiRouter
 	apiRouter := r.Group("/douyin")
-
 	/***基本api***/
 	//视频流
 	apiRouter.GET("/feed/", controller.Feed)
