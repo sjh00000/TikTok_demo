@@ -6,11 +6,16 @@ import (
 )
 
 func MapDefault() (map[string]bool, map[string]pjdata.Author) {
-	var usersLoginInfo map[string]pjdata.Author
-	var usersRegister map[string]bool
+	var usersLoginInfo = make(map[string]pjdata.Author)
+
+	var usersRegister = make(map[string]bool)
+
 	var author []Author
+
 	db.Find(&author)
+
 	fmt.Printf("%v\n", author)
+
 	for i := 0; i <= len(author)-1; i++ {
 		authorNow := author[i]
 		usersRegister[authorNow.Name] = true
@@ -22,5 +27,5 @@ func MapDefault() (map[string]bool, map[string]pjdata.Author) {
 func AddIdNum() int64 {
 	var author Author
 	db.Last(&author)
-	return author.Id + 1
+	return author.Id
 }
