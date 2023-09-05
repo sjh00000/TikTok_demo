@@ -22,3 +22,15 @@ func ChangeTotalFavorited(actionType string, videoID int64) {
 		db.Save(&video)
 	}
 }
+func ChangeCommentCount(actionType string, id int64) {
+	if actionType == "1" {
+		video := FindVideo(id)
+		video.CommentCount += 1
+		db.Save(&video)
+	} else {
+		video := FindVideo(id)
+		video.CommentCount -= 1
+		db.Save(&video)
+
+	}
+}
