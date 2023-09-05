@@ -42,6 +42,7 @@ func Publish(c *gin.Context) {
 	//获取文件的名字以及userID来创建视频文件在public文件夹下
 	filename := filepath.Base(data.Filename)
 	user := usersLoginInfo[token]
+	usersLoginInfo[token] = database.ChangeWorkCount(user.Id)
 	finalName := fmt.Sprintf("%d_%s", user.Id, filename)
 	saveFile := filepath.Join("./public/", finalName)
 	if err := c.SaveUploadedFile(data, saveFile); err != nil {
