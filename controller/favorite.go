@@ -21,6 +21,8 @@ func FavoriteAction(c *gin.Context) {
 	}
 	database.ChangeFavoriteCount(actionType, userID)
 	database.ChangeTotalFavorited(actionType, int64(videoID))
+	database.Favorites(int64(videoID), userID, actionType)
+	database.IsFavorites(int64(videoID), userID)
 }
 
 // FavoriteList all users have same favorite video list
