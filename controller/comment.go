@@ -74,8 +74,5 @@ func CommentList(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, pjdata.Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
 	}
-	c.JSON(http.StatusOK, CommentListResponse{
-		Response: pjdata.Response{StatusCode: 0},
-		//CommentList: DemoComments,
-	})
+
 }

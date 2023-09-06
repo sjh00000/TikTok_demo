@@ -34,6 +34,7 @@ func FavoriteAction(c *gin.Context) {
 func FavoriteList(c *gin.Context) {
 	token := c.Query("token")
 	userID := usersLoginInfo[token].Id
+	database.IsFavoriteUpdate(userID)
 	var videoList []pjdata.Video
 	videoList = database.FavoriteList(userID)
 	if _, exist := usersLoginInfo[token]; exist {

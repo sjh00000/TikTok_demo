@@ -42,3 +42,20 @@ func IsFavorites(videoId int64, userId int64) {
 	}
 	db.Save(&video)
 }
+
+func IsFavoriteUpdate(userId int64) {
+	var videos []Video
+	var favorite []Favorite
+	db.Find(&videos)
+	for _, video := range videos {
+		db.Find(&favorite, "video_id = ? AND user_id = ?", video.Id, userId)
+		var videoNow Video
+		db.Find(&videoNow, "id = ?", video.Id)
+		if len(favorite) == 0 {
+			videoNow.IsFavorite = false
+		} else {
+			videoNow.IsFavorite = true
+		}
+		db.Save(&videoNow)
+	}
+}
