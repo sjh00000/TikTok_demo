@@ -1,5 +1,7 @@
 package database
 
+import "tiktok/pjdata"
+
 func ChangeFavoriteCount(actionType string, userID int64) {
 	if actionType == "1" {
 		user := SearchAuthor(userID)
@@ -16,9 +18,38 @@ func ChangeTotalFavorited(actionType string, videoID int64) {
 		video := FindVideo(videoID)
 		video.FavoriteCount += 1
 		db.Save(&video)
+		var author Author
+		db.First(&author, video.AuthorId)
+		author.TotalFavorite += 1
+		db.Save(&author)
 	} else {
 		video := FindVideo(videoID)
 		video.FavoriteCount -= 1
 		db.Save(&video)
+		var author Author
+		db.First(&author, video.AuthorId)
+		author.TotalFavorite -= 1
+		db.Save(&author)
 	}
+}
+
+func ChangeCommentCount(actionType string, id int64) {
+	if actionType == "1" {
+		video := FindVideo(id)
+		video.CommentCount += 1
+		db.Save(&video)
+	} else {
+		video := FindVideo(id)
+		video.CommentCount -= 1
+		db.Save(&video)
+
+	}
+}
+
+func ChangeWorkCount(userId int64) pjdata.Author {
+	var user Author
+	db.First(&user, userId)
+	user.WorkCount += 1
+	db.Save(&user)
+	return pjdata.Author(user)
 }
